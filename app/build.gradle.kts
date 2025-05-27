@@ -81,6 +81,6 @@ dependencies {
     implementation(libs.jackson.module.kotlin)
     implementation(libs.okhttp)
 
-    implementation(libs.androidx.glance.appwidget)
-    implementation(libs.androidx.glance)
+//    implementation(libs.androidx.glance.appwidget)
+//    implementation(libs.androidx.glance)
 }

@@ -16,6 +16,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.matule.domain.UseCases
+import com.example.matule.presentation.CameraScreen
+import com.example.matule.presentation.CameraScreen1
 import com.example.matule.presentation.screens.CardScreen
 import com.example.matule.presentation.screens.CreatePasswordScreen
 import com.example.matule.presentation.screens.CreateProfileScreen
@@ -76,9 +78,13 @@ class MainActivity : ComponentActivity() {
                     ) { innerPadding ->
                         NavHost(
                             navController = navController,
-                            startDestination = "splash",
+                            startDestination = "CameraScreen",
                             modifier = Modifier.padding(innerPadding)
                         ) {
+                            composable("CameraScreen") {
+                                CameraScreen1()
+                            }
+
                             composable("CardScreen") {
                                 CardScreen()
                             }
