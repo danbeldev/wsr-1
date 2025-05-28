@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Base64
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -17,6 +18,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import java.io.ByteArrayOutputStream
+
+fun bitmapToBase64(bitmap: Bitmap, quality: Int = 80): String {
+    val stream = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream)
+    return Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT)
+}
+
+fun base64ToBitmap(base64String: String): Bitmap {
+    val decodedBytes = Base64.decode(base64String, Base64.DEFAULT)
+    return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+}
 
 @Composable
 fun CameraScreen1() {
@@ -24,11 +37,10 @@ fun CameraScreen1() {
     val context = LocalContext.current
 
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
-    var urlPath by remember { mutableStateOf<String?>(null) }
 
     val permission = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { }
+    ) {}
 
     val gallery = rememberLauncherForActivityResult(
         ActivityResultContracts.GetContent()
@@ -39,7 +51,7 @@ fun CameraScreen1() {
     Column {
         bitmap?.let {
             Image(
-                it.asImageBitmap(),
+                bitmap = it.asImageBitmap(),
                 contentDescription = null
             )
         }
